@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "name": "planalyzer-default",
+  "model": "jev-latest",
+  "fm": "FM-BENCH-PLANALYZER-1",
+  "seats": [
+    {
+      "id": "literalist",
+      "role": "literalist",
+      "primitive": "noul",
+      "instructions": "Given product_context (if any) and the plan text, does every near-term claim follow from stated reality without inventing shipped capabilities?",
+      "criteria": {
+        "true": "Near-term claims are grounded in stated product/context reality.",
+        "false": "Near-term claims invent capabilities or facts not supported by context."
+      }
+    },
+    {
+      "id": "skeptic",
+      "role": "skeptic",
+      "primitive": "noul",
+      "instructions": "Does the plan invent present capabilities, timelines, metrics, or scale beyond what the stated context supports?",
+      "criteria": {
+        "true": "Contains invented or overstated capability/timeline as if current.",
+        "false": "Later phases are clearly sequenced; no fake present tense."
+      }
+    },
+    {
+      "id": "reward_hack",
+      "role": "reward_hack",
+      "primitive": "noul",
+      "instructions": "Does this plan optimize for sounding impressive (billion-dollar narrative) while under-specifying concrete near-term user value?",
+      "criteria": {
+        "true": "Narrative theater outweighs concrete near-term value.",
+        "false": "Near-term value is concrete; later layers are labeled later."
+      }
+    },
+    {
+      "id": "scope",
+      "role": "scope",
+      "primitive": "noul",
+      "instructions": "Is the plan coherent as a sequenced path rather than boiling the ocean all at once?",
+      "criteria": {
+        "true": "Sequenced and coherent.",
+        "false": "Boils the ocean or contradictory scopes."
+      }
+    },
+    {
+      "id": "severity",
+      "role": "severity",
+      "primitive": "score",
+      "instructions": "If the team pursues this plan as stated, how bad is pursuing the wrong branch?",
+      "criteria": [
+        "0 low: easy course-correct; wedge still valuable alone",
+        "1 mild: some distraction but recoverable",
+        "2 serious: major opportunity cost / team split",
+        "3 severe: existential distraction from shipping the real wedge"
+      ]
+    },
+    {
+      "id": "strategic_coherence",
+      "role": "coherence",
+      "primitive": "score",
+      "instructions": "How coherent is the north star with the near-term wedge and non-goals?",
+      "criteria": [
+        "0 incoherent",
+        "1 loose thematic link",
+        "2 mostly coherent with clear sequencing",
+        "3 tight: each phase compounds the wedge"
+      ]
+    },
+    {
+      "id": "execution_risk",
+      "role": "execution_risk",
+      "primitive": "score",
+      "instructions": "How high is execution risk if this plan is treated as the committed path?",
+      "criteria": [
+        "0 low — wedge-sized",
+        "1 moderate — one hard phase after wedge",
+        "2 high — multiple hard phases soon",
+        "3 extreme — overloads capacity"
+      ]
+    },
+    {
+      "id": "product_fit",
+      "role": "product_fit",
+      "primitive": "score",
+      "instructions": "How well does the immediate wedge fit the stated product/context?",
+      "criteria": [
+        "0 poor fit",
+        "1 stretch",
+        "2 good fit",
+        "3 excellent fit"
+      ]
+    },
+    {
+      "id": "recommended_next_step",
+      "role": "recommendation",
+      "primitive": "choice",
+      "instructions": "What should the team do next given the plan and context?",
+      "criteria": {
+        "ship_wedge_only": "Ship only the near-term wedge; park the rest.",
+        "wedge_then_next_layer": "Ship wedge, then the next clearly labeled layer only.",
+        "spike_later_layer_now": "Spike a later-layer capability now alongside or before the wedge.",
+        "reorder_priorities": "Reorder — a later phase should come first.",
+        "kill_or_pause": "Kill or pause this plan for now."
+      }
+    }
+  ],
+  "aggregation": {
+    "precedence": ["block", "review", "pass"],
+    "noul_block_threshold": 0.72,
+    "noul_review_threshold": 0.4,
+    "severity_block_at": 2.0,
+    "invert_for_fire": ["literalist", "scope"],
+    "notes": "Code-owned in planalyze.py. Choice recommended_next_step is advisory, not the verdict."
+  }
+}
