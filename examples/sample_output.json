@@ -1,0 +1,15 @@
+{
+  "verdict": "block",
+  "fired": ["severity", "skeptic", "reward_hack"],
+  "recommended_next_step": {
+    "choice": "wedge_then_next_layer",
+    "confidence": 0.57
+  },
+  "scores": {
+    "strategic_coherence": 2.8,
+    "execution_risk": 2.8,
+    "product_fit": 2.8,
+    "severity": 2.1
+  },
+  "plain_english": "Example only — run planalyze.py live for real Jev probs. Pursue-as-stated blocked on severity; advisory next step wedge_then_next_layer."
+}
